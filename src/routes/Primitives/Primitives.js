@@ -1,6 +1,9 @@
 import React from 'react';
 
-import { View, Text, StyleSheet } from 'react-primitives';
+import { View, Text, StyleSheet, Animated } from 'react-primitives';
+// import { View, Text, StyleSheet, Animated } from 'react-native';
+
+// can import Animated directly from react-primitives!!!!
 
 /*
 *  Animated: Pulled from the animated project.
