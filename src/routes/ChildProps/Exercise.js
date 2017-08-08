@@ -14,13 +14,34 @@ const API = {
 }
 
 class GetData extends React.Component {
+  state = {
+    data: [],
+    loading: true,
+  }
+
+  componentDidMount() {
+    API.getData().then(data => {
+      this.setState(() => ({ data: data, loading: false }));
+    });
+  }
+
   render() {
-    return this.props.children('')
+    return this.props.children(this.state)
   }
 }
 
 export default () => (
-  <div>
-      {/* Here use <GetData> to map over the data from the API */}
-  </div>
+  <GetData>
+      {
+        ({ data, loading }) => (
+          loading ? <p>Loading...</p> : <div>
+            {
+              data.map((item, index) => (
+                <p key={index}>{item}</p>
+              ))
+            }
+          </div>
+        )
+      }
+  </GetData>
 )

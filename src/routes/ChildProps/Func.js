@@ -26,15 +26,11 @@ class CurrentMousePosition extends React.Component {
 };
 
 const Func = () => (
-  <div>
-    <CurrentMousePosition>
-      {
-        ({ x, y }) => <p>x: {x}, y: {y}</p>
-      }
-    </CurrentMousePosition>
-  </div>
+  <CurrentMousePosition>
+    {
+      ({ x, y }) => <p>x: {x}, y: {y}</p>
+    }
+  </CurrentMousePosition>
 );
 
 export default Func;
-
-
