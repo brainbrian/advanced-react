@@ -15,16 +15,26 @@ export default class Context extends React.Component {
   // set childContextTypes in parent
   static childContextTypes = {
     name: PropTypes.string,
+    age: PropTypes.number,
+    func: PropTypes.function,
   }
   // call getChildContext in parent
   getChildContext() {
     return {
-      name: 'Nader Dabit',
+      name: 'Brian Behrens',
+      age: 34,
+      func: this.funTimes,
     }
   }
+
+  funTimes = () => {
+    return 'fun times!';
+  }
+
   logFormData = (formData) => {
     console.log('formData:', formData)
   }
+
   render() {
     return (
       <div>
@@ -43,14 +53,25 @@ class Child1 extends React.Component {
   }
 }
 
-const Child2 = (props, context) => (
-  <div style={styles.child2}>
-    <p>Child2</p>
-    <p>Name: {context.name}</p>
-  </div>
-)
-Child2.contextTypes = {
-  name: PropTypes.string,
+class Child2 extends React.Component {
+  static contextTypes = {
+    name: PropTypes.string,
+    age: PropTypes.number,
+    func: PropTypes.function,
+  }
+
+
+
+  render() {
+    return (
+      <div style={styles.child2}>
+        <p>Child2</p>
+        <p>Name: {this.context.name}</p>
+        <p>Age: {this.context.age}</p>
+        <p>Fun: {this.context.func()}</p>
+      </div>
+    );
+  }
 }
 
 const styles = {
