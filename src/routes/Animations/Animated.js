@@ -84,7 +84,7 @@ export default class AnimatedExample extends React.PureComponent {
         </Animated.div>
         {
           data.map((item, index) => (
-            <Animated.div style={Object.assign(Object.assign({}, styles.box, { opacity: this.animatedValues[item] }))} key={index}>
+            <Animated.div style={Object.assign({}, styles.box, { opacity: this.animatedValues[item] })} key={index}>
               { item }
             </Animated.div>
           ))
