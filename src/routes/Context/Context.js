@@ -16,7 +16,7 @@ export default class Context extends React.Component {
   static childContextTypes = {
     name: PropTypes.string,
     age: PropTypes.number,
-    func: PropTypes.function,
+    func: PropTypes.func,
   }
   // call getChildContext in parent
   getChildContext() {
@@ -28,7 +28,7 @@ export default class Context extends React.Component {
   }
 
   funTimes = () => {
-    return 'fun times!';
+    alert('BOOM!');
   }
 
   logFormData = (formData) => {
@@ -57,10 +57,8 @@ class Child2 extends React.Component {
   static contextTypes = {
     name: PropTypes.string,
     age: PropTypes.number,
-    func: PropTypes.function,
+    func: PropTypes.func,
   }
-
-
 
   render() {
     return (
@@ -68,7 +66,7 @@ class Child2 extends React.Component {
         <p>Child2</p>
         <p>Name: {this.context.name}</p>
         <p>Age: {this.context.age}</p>
-        <p>Fun: {this.context.func()}</p>
+        <button type="button" onClick={this.context.func}>Blow it up</button>
       </div>
     );
   }
