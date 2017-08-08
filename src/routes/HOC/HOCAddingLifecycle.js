@@ -6,14 +6,14 @@ const MainComponent = () =>
 const AddingLifecycle = (Component, node, type, func) => {
   return class extends React.Component {
     componentDidMount() {
-      node.addEventListener(type, func);
+      node.addEventListener(type, () => func(window.innerWidth));
     }
     render() {
       return (
-        <MainComponent {...this.state} />
+        <Component {...this.state} />
       )
     }
   }
 }
 
-export default AddingLifecycle(MainComponent, window, 'resize', () => console.log('resized...'));
+export default AddingLifecycle(MainComponent, window, 'resize', (width) => console.log(`width: ${width}`));
