@@ -23,3 +23,13 @@ body {
   margin-left: 100px;
 }
 
+.input {
+  transition: width 1s, background .45s, padding .4s;
+  width: 200px;
+}
+
+.input--focus {
+  background: #ccc;
+  padding: 5px;
+  width: 300px;
+}

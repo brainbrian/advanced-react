@@ -10,11 +10,13 @@ export default class CSSAnimations extends React.PureComponent {
   state = {
     animated: false,
   }
+
   animate = () => {
     this.setState((state) => ({
       animated: !state.animated,
     }))
   }
+
   render() {
     return (
       <div>
@@ -23,6 +25,9 @@ export default class CSSAnimations extends React.PureComponent {
           onClick={this.animate}
         >Animate</button>
         <div className={['box', this.state.animated && 'box-animated'].join(' ')} />
+
+
+        <input className={['input', this.state.animated && 'input--focus'].join(' ')} type="text" onFocus={this.animate} onBlur={this.animate} />
       </div>
     )
   }
