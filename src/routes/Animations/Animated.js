@@ -13,14 +13,27 @@ import Easing from 'animated/lib/Easing';
 
 // use this.animatedValue.setValue(0) to reset a value
 
+const data = ['Chris', 'Brian', 'Zak'];
+
 export default class AnimatedExample extends React.PureComponent {
-  state = {
-    animated: false,
+  constructor() {
+    super();
+    this.state = {
+      animated: false,
+    }
+    this.animatedValues = [];
+    data.forEach((item) => {
+      this.animatedValues[item] = new Animated.Value(0);
+    });
   }
 
   animatedValue = new Animated.Value(0);
 
-  updateMargin = () => {
+  componentDidMount() {
+    this.animateNames();
+  }
+
+  animateClick = () => {
     Animated.timing(
       this.animatedValue,
       {
@@ -31,9 +44,22 @@ export default class AnimatedExample extends React.PureComponent {
     ).start(() => {
       console.log('animation complete');
     })
-    this.setState((state) => ({ animated: !state.animated }))
+    this.setState((state) => ({ animated: !state.animated }));
   }
 
+  animateNames = () => {
+    const animations = data.map((item, index) => (
+      Animated.timing(
+        this.animatedValues[item],
+        {
+          toValue: 1,
+          duration: 500,
+          delay: index * 100,
+        }
+      )
+    ));
+    Animated.parallel(animations).start();
+  }
 
   render() {
     const animatedMarginLeft = this.animatedValue.interpolate({
@@ -51,11 +77,18 @@ export default class AnimatedExample extends React.PureComponent {
     return (
       <div>
         <p>Animated</p>
-        <button onClick={this.updateMargin}>Update Margin</button>
+        <button onClick={this.animateClick}>Update Margin</button>
         <Animated.div style={Object.assign({}, styles.box, { marginLeft: animatedMarginLeft, backgroundColor })} />
         <Animated.div style={{ fontSize }}>
           Hello World
         </Animated.div>
+        {
+          data.map((item, index) => (
+            <Animated.div style={Object.assign(Object.assign({}, styles.box, { opacity: this.animatedValues[item] }))} key={index}>
+              { item }
+            </Animated.div>
+          ))
+        }
       </div>
     )
   }
