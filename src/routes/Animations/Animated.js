@@ -1,6 +1,9 @@
 import React from 'react';
 
 import Animated from 'animated/lib/targets/react-dom';
+import Easing from 'animated/lib/Easing';
+
+// import { Animated, Easing } from 'react-navtive'; - Used for native animations
 
 /* Exercise:
 *  Use interpolation to create an animated message that will show up after a
@@ -15,27 +18,44 @@ export default class AnimatedExample extends React.PureComponent {
     animated: false,
   }
 
-  animatedMarginLeft = new Animated.Value(0);
+  animatedValue = new Animated.Value(0);
 
   updateMargin = () => {
     Animated.timing(
-      this.animatedMarginLeft,
+      this.animatedValue,
       {
-        duration: 300,
-        toValue: this.state.animated ? 0 : 300,
+        duration: 1000,
+        toValue: this.state.animated ? 0 : 1,
+        easing: Easing.bounce,
       }
-    ).start()
+    ).start(() => {
+      console.log('animation complete');
+    })
     this.setState((state) => ({ animated: !state.animated }))
   }
 
 
   render() {
-
+    const animatedMarginLeft = this.animatedValue.interpolate({
+      inputRange: [0, 1],
+      outputRange: [0, 300],
+    });
+    const fontSize = this.animatedValue.interpolate({
+      inputRange: [0, 1],
+      outputRange: [16, 32],
+    });
+    const backgroundColor = this.animatedValue.interpolate({
+      inputRange: [0, .15, 1],
+      outputRange: ['orange', 'purple', 'black'],
+    });
     return (
       <div>
         <p>Animated</p>
         <button onClick={this.updateMargin}>Update Margin</button>
-        <Animated.div style={Object.assign({}, styles.box, { marginLeft: this.animatedMarginLeft })} />
+        <Animated.div style={Object.assign({}, styles.box, { marginLeft: animatedMarginLeft, backgroundColor })} />
+        <Animated.div style={{ fontSize }}>
+          Hello World
+        </Animated.div>
       </div>
     )
   }
@@ -47,6 +67,5 @@ const styles = {
     width: 100,
     height: 100,
     backgroundColor: 'red',
-    transition: 'all .5s linear'
   },
 }
